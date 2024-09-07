@@ -1,0 +1,20 @@
+.cart_section_container {
+  width: 320px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.cart_section_header {
+  background-color: #f8f9fa;
+  padding: 16px 24px;
+}
+
+.cart_section_content {
+  padding: 16px 24px;
+  background-color: #ffffff;
+}
+
+.cart_section_title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #464646;
+}

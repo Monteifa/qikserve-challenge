@@ -1,0 +1,25 @@
+.teste {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #4F372F;
+    width: 88px;
+    padding: 12px;
+}
+
+.circle {
+    padding: 2px;
+    border: 2px solid #4F372F;
+    border-radius: 50%;
+    width: 82px;
+    height: 82px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.img-teste {   
+    border-radius: 50%;
+}

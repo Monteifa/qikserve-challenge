@@ -1,0 +1,35 @@
+.header_container {
+    width: 100%;
+    background-color: #4F372F;  
+    padding: 16px;
+    color: white;
+}
+
+.mobile_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.desktop_nav {
+    display: none;
+}
+
+@media (min-width: 1200px) {
+    .desktop_nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .desktop_nav a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .mobile_nav {
+        display: none;
+    }    
+}
+

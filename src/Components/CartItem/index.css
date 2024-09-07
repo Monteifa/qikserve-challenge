@@ -1,0 +1,26 @@
+.cart_item_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 24px;
+}
+
+.cart_item_name {
+    font-size: 16px;
+    font-weight: 400;
+    color: #121212;
+    margin-bottom: 4px;
+}
+
+.cart_item_modifier {
+    font-size: 16px;
+    font-weight: 400;
+    color: #5F5F5F;
+    margin-bottom: 12px;
+}
+
+.cart-item_price {
+    font-size: 16px;
+    font-weight: 500;
+    color: #121212;
+}
