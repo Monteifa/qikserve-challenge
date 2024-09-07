@@ -1,68 +1,26 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
-interface SectionProps {
-  id: number;
-  name: string;
-  description?: null;
-  position: number;
-  visible?: number;
-  images: {
-    id: number;
-    image: string;
-  }[];
-  items: {
-    id: number;
-    name: string;
-    description?: string;
-    alcoholic: number;
-    price: number;
-    position: number;
-    visible?: number | undefined;
-    availabilityType: string;
-    sku?: string;
-    images?: {
-      id: number;
-      image: string;
-    }[];
-    modifiers?: {
-      items: {
-        name: string;
-        price: number;
-      }[];
-    }[];
-    available: boolean;
-  }[];
-}
+import { RestaurantProps } from '../types/restaurant.types';
+import { MenuProps } from '../types/menu.types';
 
 interface ContextProps {
-  sections: SectionProps[];
-  setSections: Dispatch<SetStateAction<SectionProps[]>>;
+  restaurant?: RestaurantProps;
+  setRestaurant: (data: RestaurantProps) => void;
+  menu?: MenuProps;
+  setMenu: (data: MenuProps) => void;
 }
 
-const Context = createContext<ContextProps>({
-  sections: [],
-  setSections: () => {},
-});
+const Context = createContext<ContextProps>({} as ContextProps);
 
 export const DataContextProvider = ({ children }: { children: ReactNode }) => {
-  const [sections, setSections] = useState<SectionProps[]>([]);
+  const [restaurant, setRestaurant] = useState<RestaurantProps>();
+  const [menu, setMenu] = useState<MenuProps>();
 
-  const memo = useMemo(
-    () => ({
-      sections,
-      setSections,
-    }),
-    [sections, setSections]
+  return (
+    <Context.Provider value={{ restaurant, setRestaurant, menu, setMenu }}>
+      {children}
+    </Context.Provider>
   );
-  return <Context.Provider value={memo}>{children}</Context.Provider>;
 };
 
 export const useDataContext = () => useContext(Context);

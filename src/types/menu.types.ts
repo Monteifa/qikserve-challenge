@@ -33,7 +33,7 @@ export interface ItemsProps {
   availabilityType: string;
   sku?: string;
   images?: Array<ImageProps>;
-  modifiers?: ModifiersProps;
+  modifiers?: Array<ModifiersProps>;
   available: boolean;
 }
 

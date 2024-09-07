@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import './index.css';
 
 const Badge = ({ children }: { children: ReactNode }) => {
-  return <div className='badge'>{children}</div>;
+  return <span className='badge'>{children}</span>;
 };
 
 export default Badge;

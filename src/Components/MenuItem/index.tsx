@@ -1,52 +1,34 @@
-import { useContextModal } from '../../contexts/ModalContext';
+import { useCartContext } from '../../contexts/CartContext';
+import { ItemsProps } from '../../types/menu.types';
+
 import Badge from '../Badge';
 
 import './index.css';
 
-interface teste {
-  id: number;
-  name: string;
-  description?: string;
-  alcoholic: number;
-  price: number;
-  position: number;
-  visible?: number | undefined;
-  availabilityType: string;
-  sku?: string;
-  images?: {
-    id: number;
-    image: string;
-  }[];
-  modifiers?: {
-    items: {
-      name: string;
-      price: number;
-    }[];
-  }[];
-  available: boolean;
-}
+const { format } = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+});
+const MenuItem = ({
+  item,
+  setSelected,
+}: {
+  item: ItemsProps;
+  setSelected: (item: ItemsProps) => void;
+}) => {
+  const { cart } = useCartContext();
 
-// interface MenuItemProps {
-//   name: string;
-//   description: string | undefined;
-//   price: number;
-//   img: string | undefined;
-// }
+  const qty = cart.find((itemCart) => itemCart.id === item.id)?.quantity;
 
-const MenuItem = (item: teste) => {
-  const { setModal } = useContextModal();
   return (
-    <div
-      className='menu-item-container'
-      onClick={() => setModal({ item: item, isOpen: true })}
-    >
+    <div className='menu-item-container' onClick={() => setSelected(item)}>
       <div className=''>
         <p className='menu_item_title'>
-          <Badge>2</Badge>
+          {qty && <Badge>{qty}</Badge>}
           {item.name}
         </p>
         <p className='menu_item_description'>{item.description}</p>
-        <p className='menu_item_price'>R${item.price}</p>
+        <p className='menu_item_price'>{format(item.price)}</p>
       </div>
 
       {item.images && (

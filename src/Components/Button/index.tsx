@@ -1,13 +1,17 @@
-import { ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 import './index.css';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 
-const Button = ({ children }: ButtonProps) => {
-  return <div className='button-container'>{children}</div>;
+const Button = ({ children, ...props }: ButtonProps) => {
+  return (
+    <button {...props} className='button-container'>
+      {children}
+    </button>
+  );
 };
 
 export default Button;
