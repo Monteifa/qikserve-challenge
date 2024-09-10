@@ -1,10 +1,19 @@
+import { useEffect, useState } from 'react';
+
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { FaRegImage } from 'react-icons/fa6';
+
+import QuantityController from '../QuantityControl';
 import Button from '../Button';
-import './index.css';
-import { useState } from 'react';
-import QuantityControler from '../CounterControl';
-import { ItemsModifiersProps, ItemsProps } from '../../types/menu.types';
+
+import { ItemsModifiers, Items } from '../../types/menu.types';
+
 import { useCartContext } from '../../contexts/CartContext';
+
+import './index.css';
+import { useFormatCurrency } from '../../utils/formatCurrency';
+
+import { useRef } from 'react';
 
 const { format } = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -15,18 +24,27 @@ interface Order {
   id: number;
   name: string;
   price: number;
-  modifier?: ItemsModifiersProps;
+  modifier?: ItemsModifiers;
   quantity: number;
 }
 
-const Modal = ({
-  item,
-  setSelected,
-}: {
-  item: ItemsProps;
-  setSelected: (item?: ItemsProps) => void;
-}) => {
-  const { updateCart } = useCartContext();
+interface ModalProps {
+  item: Items;
+  setSelected: (item?: Items) => void;
+}
+
+const Modal = ({ item, setSelected }: ModalProps) => {
+  const { addToCart } = useCartContext();
+
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+
+  useEffect(() => {
+    if (item) {
+      dialogRef.current?.showModal();
+      return;
+    }
+  }, [item]);
+
   const [quantity, setQuantity] = useState(1);
   const [selectedModifier, setSelectedModifier] = useState(
     item?.modifiers?.[0].items?.[0]
@@ -44,77 +62,95 @@ const Modal = ({
     setQuantity(qty);
   };
 
-  const updateModifier = (modifier: ItemsModifiersProps) => {
+  const updateModifier = (modifier: ItemsModifiers) => {
     setSelectedModifier(modifier);
   };
 
   const handleOrder = (order: Order) => {
-    updateCart(order, 'add');
+    addToCart(order);
     setSelected(undefined);
   };
 
   return (
-    <>
-      <div className='modal-container'>
-        <div className='modal-teste'>
-          <div>
-            <img src={item.images && item.images[0].image} alt='' />
+    <dialog
+      className='dialog'
+      ref={dialogRef}
+      onCancel={() => setSelected(undefined)}
+    >
+      <div className='modal_container'>
+        {item.images ? (
+          <img src={item?.images?.[0]?.image} alt='' />
+        ) : (
+          <div className='image_container'>
+            <div className='icon_container'>
+              <FaRegImage className='icon_img' />
+            </div>
           </div>
+        )}
 
-          <div className='item-info'>
-            <h1>{item.name}</h1>
+        <button className='button_close'>
+          <AiFillCloseCircle
+            className='icon_close'
+            onClick={() => setSelected(undefined)}
+          />
+        </button>
 
-            <p>{item.description}</p>
-          </div>
+        <div className='item_info_container'>
+          <h1 className='item_name'>{item.name}</h1>
 
-          {item.modifiers && (
-            <>
-              <div className='modifiers-header'>
-                <h3>Choose your size</h3>
-                <p>Select 1 option</p>
-              </div>
+          <p className='item_description'>{item.description}</p>
+        </div>
 
-              {item.modifiers.map((modifier) =>
-                modifier.items.map((modifierItem) => (
-                  <label
-                    key={modifierItem.id}
-                    htmlFor={`${modifierItem.id}`}
-                    className='modifiers-items'
-                  >
-                    <div>
-                      <p>{modifierItem.name}</p>
-                      <p>{modifierItem.price}</p>
-                    </div>
+        {item.modifiers && (
+          <>
+            <div className='modifiers_header'>
+              <h3>Choose your size</h3>
+              <p>Select 1 option</p>
+            </div>
 
-                    <input
-                      type='radio'
-                      name={`${modifier.id}`}
-                      id={`${modifierItem.id}`}
-                      onChange={() => updateModifier(modifierItem)}
-                      checked={selectedModifier?.id === modifierItem.id}
-                      value={modifier.id}
-                    />
-                  </label>
-                ))
-              )}
-            </>
-          )}
+            {item.modifiers.map((modifier) =>
+              modifier.items.map((modifierItem) => (
+                <label
+                  key={modifierItem.id}
+                  htmlFor={`${modifierItem.id}`}
+                  className='modifier_item'
+                >
+                  <div>
+                    <p className='modifier_name'>{modifierItem.name}</p>
+                    <p className='modifier_price'>
+                      {format(modifierItem.price)}
+                    </p>
+                  </div>
 
-          <div className='controls-container'>
-            <QuantityControler
-              qty={order?.quantity ?? 0}
-              setQuantity={updateQuantity}
-            />
+                  <input
+                    type='radio'
+                    className='input_radio'
+                    name={`${modifier.id}`}
+                    id={`${modifierItem.id}`}
+                    onChange={() => updateModifier(modifierItem)}
+                    checked={selectedModifier?.id === modifierItem.id}
+                    value={modifier.id}
+                  />
+                </label>
+              ))
+            )}
+          </>
+        )}
 
-            <Button onClick={() => handleOrder(order)}>
-              Add to Order {format(order?.price)}
-            </Button>
-          </div>
+        <div className='controls_container'>
+          <QuantityController
+            qty={order?.quantity ?? 0}
+            setQuantity={updateQuantity}
+          />
 
-          <AiFillCloseCircle onClick={() => setSelected(undefined)} />
+          <Button
+            text='Add to Order'
+            secondText={`${useFormatCurrency(order?.price)}`}
+            onClick={() => handleOrder(order)}
+          />
         </div>
       </div>
-    </>
+    </dialog>
   );
 };
 

@@ -1,0 +1,43 @@
+.control_container {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.icon_circle {  
+  background-color: #4f372f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.small {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+.icon_circle svg {
+  color: white;
+}
+
+.icon_circle:disabled {
+  background-color: #dadada;
+}
+
+.icon_circle:disabled > svg {
+  color: #5f5f5f;
+}
+
+.controls_counter {
+  font-size: 16px;
+  font-weight: 700;
+  color: #121212;
+}

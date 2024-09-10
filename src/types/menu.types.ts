@@ -1,9 +1,9 @@
-export interface ImageProps {
+export interface Image {
   id: number;
   image: string;
 }
 
-export interface ItemsModifiersProps {
+export interface ItemsModifiers {
   id: number;
   name: string;
   price: number;
@@ -14,15 +14,15 @@ export interface ItemsModifiersProps {
   available: boolean;
 }
 
-export interface ModifiersProps {
+export interface Modifiers {
   id: number;
   name: string;
   minChoices: number;
   maxChoices: number;
-  items: Array<ItemsModifiersProps>;
+  items: Array<ItemsModifiers>;
 }
 
-export interface ItemsProps {
+export interface Items {
   id: number;
   name: string;
   description?: string;
@@ -32,25 +32,25 @@ export interface ItemsProps {
   visible?: number | undefined;
   availabilityType: string;
   sku?: string;
-  images?: Array<ImageProps>;
-  modifiers?: Array<ModifiersProps>;
+  images?: Array<Image>;
+  modifiers?: Array<Modifiers>;
   available: boolean;
 }
 
-export interface SectionProps {
+export interface Section {
   id: number;
   name: string;
   description: string | undefined;
   position: number;
   visible: number;
-  images: Array<ImageProps>;
-  items: Array<ItemsProps>;
+  images: Array<Image>;
+  items: Array<Items>;
 }
 
-export interface MenuProps {
+export interface Menu {
   id: number;
   name: string;
   type: string;
   collapse: number;
-  sections: Array<SectionProps>;
+  sections: Array<Section>;
 }

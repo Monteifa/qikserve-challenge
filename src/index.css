@@ -11,19 +11,18 @@ body {
 }
 
 .container {
+  width: 100%;
   display: flex;
   background-color: #F8F9FA;
-  padding: 32px 40px;
-  max-width: 1024px;
-  margin: auto;
   gap: 24px;
+  position: relative;
 }
 
 .menu-container {
+  width: 100%;
   padding: 16px;
   background-color: #FFFFFF;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  width: 600px;
 }
 
 .img-header {
@@ -33,7 +32,7 @@ body {
 
 .section-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 32px;
 }
@@ -65,6 +64,33 @@ body {
 .search_bar input:focus {
   border: 0 none;
   outline: 0;
+}
+
+.mobile_btn_cart {
+  position: fixed;
+  bottom: 10px;
+  left: 40px;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    padding: 32px 40px;
+    max-width: 1024px;
+    margin: auto;
+  }  
+
+  .menu-container {
+    max-width: 600px;
+  }
+
+  .mobile_btn_cart{
+    display: none;
+  }
+
+  .section-container {
+    justify-content: flex-start;
+  }
 }
 
 

@@ -1,20 +1,17 @@
 import { useCartContext } from '../../contexts/CartContext';
-import { ItemsProps } from '../../types/menu.types';
+import { Items } from '../../types/menu.types';
+import { useFormatCurrency } from '../../utils/formatCurrency';
 
 import Badge from '../Badge';
 
 import './index.css';
 
-const { format } = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL',
-});
 const MenuItem = ({
   item,
   setSelected,
 }: {
-  item: ItemsProps;
-  setSelected: (item: ItemsProps) => void;
+  item: Items;
+  setSelected: (item: Items) => void;
 }) => {
   const { cart } = useCartContext();
 
@@ -28,7 +25,7 @@ const MenuItem = ({
           {item.name}
         </p>
         <p className='menu_item_description'>{item.description}</p>
-        <p className='menu_item_price'>{format(item.price)}</p>
+        <p className='menu_item_price'>{useFormatCurrency(item.price)}</p>
       </div>
 
       {item.images && (

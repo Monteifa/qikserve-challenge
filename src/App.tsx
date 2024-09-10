@@ -5,34 +5,36 @@ import Header from './Components/Header';
 import SectionItem from './Components/SectionItem';
 import Modal from './Components/Modal';
 import Accordion from './Components/Accordion';
+import CartSection from './Components/CartSection';
 
-// import headerImg from './assets/header.png';
-
-import { FaBars } from 'react-icons/fa6';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 import { useDataContext } from './contexts/DataContext';
 
-import './index.css';
-
 import { MenuMock, RestaurantMock } from './consts/index';
-import CartSection from './Components/CartSection';
-import { RestaurantProps } from './types/restaurant.types';
-import { ItemsProps, MenuProps } from './types/menu.types';
+import { Restaurant } from './types/restaurant.types';
+import { Items, Menu } from './types/menu.types';
+
+import './index.css';
+import Button from './Components/Button';
+import { useCartContext } from './contexts/CartContext';
 
 function App() {
-  // const [dataRestaurant, setDataRestaurant] = useState();
-  // const [dataMenu, setDataMenu] = useState();
-
-  const [selectedItem, setSelectedItem] = useState<ItemsProps>();
+  const [selectedItem, setSelectedItem] = useState<Items>();
+  const [cartOpen, setCartOpen] = useState(false);
 
   const { restaurant, setRestaurant, menu, setMenu } = useDataContext();
+
+  const { cart } = useCartContext();
+
+  // const [filtered, setFiltered] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       await new Promise((res) => setTimeout(res, 2000));
-      setRestaurant(RestaurantMock as unknown as RestaurantProps);
+      setRestaurant(RestaurantMock as unknown as Restaurant);
 
-      setMenu(MenuMock as unknown as MenuProps);
+      setMenu(MenuMock as unknown as Menu);
       // const promises: Promise<Response>[] = [
       //   fetch(
       //     'https://api.allorigins.win/get?url=https://cdn-dev.preoday.com/challenge/venue/9'
@@ -63,6 +65,14 @@ function App() {
     getData();
   }, []);
 
+  // const handleSearch = (value: any) => {
+  //   const array = menu?.sections.filter((section) =>
+  //     section.items.filter((item) => item.name === value)
+  //   );
+
+  //   setFiltered(array);
+  // };
+
   return (
     <>
       <Header />
@@ -73,7 +83,7 @@ function App() {
       />
       <div className='search_bar_container'>
         <div className='search_bar'>
-          <FaBars width={24} height={24} />
+          <AiOutlineSearch width={24} height={24} />
 
           <input type='text' placeholder='Search menu items' />
         </div>
@@ -105,7 +115,15 @@ function App() {
           ))}
         </div>
 
-        <CartSection />
+        <CartSection cartOpen={cartOpen} setCartOpen={setCartOpen} />
+
+        <div className='mobile_btn_cart'>
+          <Button
+            text='Carrinho'
+            secondText={`${cart.length} item(s)`}
+            onClick={() => setCartOpen(!cartOpen)}
+          />
+        </div>
       </div>
 
       {selectedItem && (

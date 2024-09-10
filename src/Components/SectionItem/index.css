@@ -6,6 +6,7 @@
     border-bottom: 2px solid #4F372F;
     width: 88px;
     padding: 12px;
+    cursor: pointer;
 }
 
 .circle {

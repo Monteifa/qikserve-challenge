@@ -1,8 +1,11 @@
+import { useState } from 'react';
+import { FaBars } from 'react-icons/fa6';
+
 import './index.css';
 
-import { AiOutlineMenu } from 'react-icons/ai';
-
 const Header = () => {
+  const [navbarOpen, setNavbarOpen] = useState(false);
+
   return (
     <div className='header_container'>
       <nav className='desktop_nav'>
@@ -14,8 +17,20 @@ const Header = () => {
       <div className='mobile_nav'>
         <div></div>
         <div className='active_nav'>Menu</div>
+        <FaBars
+          className='mobile_nav_icon'
+          onClick={() => setNavbarOpen(!navbarOpen)}
+        />
 
-        <AiOutlineMenu width={24} height={24} />
+        {navbarOpen && (
+          <div className='teste_nav'>
+            <a href=''>MENU</a>
+
+            <a href=''>ENTRAR</a>
+
+            <a href=''>CONTATO</a>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-export interface RestaurantProps {
+export interface Restaurant {
   id: number;
   name: string;
   internalName: string;

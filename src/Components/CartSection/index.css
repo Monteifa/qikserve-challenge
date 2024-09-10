@@ -1,4 +1,5 @@
 .cart_section_container {
+  display: none;
   width: 320px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -6,6 +7,9 @@
 .cart_section_header {
   background-color: #f8f9fa;
   padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .cart_section_content {
@@ -17,4 +21,59 @@
   font-size: 24px;
   font-weight: 500;
   color: #464646;
+}
+
+.cart_section_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 16px 24px;
+}
+
+.subtotal_text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #121212;
+}
+
+.subtotal_price {
+  font-size: 16px;
+  font-weight: 500;
+  color: #121212;
+}
+
+.total_text {
+  font-size: 24px;
+  font-weight: 300;
+  color: #121212;
+}
+
+.total_price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #121212;
+}
+
+.divider {
+  height: 1px;
+  background-color: #DADADA;
+}
+
+.cart_section_container_mobile{
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  background-color: white;
+}
+
+@media (min-width: 1200px) {
+  .cart_section_container_mobile {
+    display: none;
+
+  }  
+
+  .cart_section_container {
+    display: block;
+  }
 }

@@ -1,17 +1,14 @@
 import { Order, useCartContext } from '../../contexts/CartContext';
-import QuantityControler from '../CounterControl';
+import { useFormatCurrency } from '../../utils/formatCurrency';
+import QuantityControler from '../QuantityControl';
 
 import './index.css';
 
-const { format } = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL',
-});
 const CartItem = ({ id, name, price, quantity, modifier }: Order) => {
   const { updateCart } = useCartContext();
 
   const handleSetQuantity = (qty: number) => {
-    updateCart({ id, name, price, quantity: qty, modifier }, 'update');
+    updateCart({ id, name, price, quantity: qty, modifier });
   };
 
   const itemPrice = quantity * (price || modifier?.price || 0);
@@ -26,11 +23,12 @@ const CartItem = ({ id, name, price, quantity, modifier }: Order) => {
           qty={quantity}
           setQuantity={handleSetQuantity}
           allowRemove
+          size='small'
         />
       </div>
 
       <div>
-        <p className='cart-item_price'>{format(itemPrice)}</p>
+        <p className='cart-item_price'>{useFormatCurrency(itemPrice)}</p>
       </div>
     </div>
   );

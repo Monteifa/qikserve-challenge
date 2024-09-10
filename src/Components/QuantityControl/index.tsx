@@ -6,17 +6,19 @@ interface QuantityControlProps {
   qty: number;
   setQuantity: (data: number) => void;
   allowRemove?: boolean;
+  size?: 'small';
 }
 
-const QuantityControler = ({
+const QuantityControl = ({
   qty,
   setQuantity,
   allowRemove,
+  size,
 }: QuantityControlProps) => {
   return (
-    <div className='control-container'>
+    <div className='control_container'>
       <button
-        className='icon-circle'
+        className={`icon_circle ${size}`}
         onClick={() => setQuantity(qty - 1)}
         disabled={!allowRemove && qty === 1}
       >
@@ -24,11 +26,14 @@ const QuantityControler = ({
       </button>
       <p className='controls_counter'>{qty}</p>
 
-      <button className='icon-circle' onClick={() => setQuantity(qty + 1)}>
+      <button
+        className={`icon_circle ${size}`}
+        onClick={() => setQuantity(qty + 1)}
+      >
         <FaPlus />
       </button>
     </div>
   );
 };
 
-export default QuantityControler;
+export default QuantityControl;

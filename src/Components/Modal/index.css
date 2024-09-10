@@ -1,42 +1,154 @@
-.modal-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(0 0 0 / 0.6);
-    position: fixed;
-    inset: 0px;
+.dialog {
+  position: fixed;
+  border: none;
+  inset: 0;
+  animation: slide-out 0.5s ease-out;
+  margin: auto;
 }
 
-.modal-teste {
-    background-color: white;
-    width: 480px;
+.dialog[open] {
+  animation: slide-in 0.5s ease-out;
 }
 
-.modal-teste img {
-    width: 100%;
+.dialog::backdrop {
+  background-color: black;
+  opacity: 0.75;
 }
 
-.item-info{
-    padding: 16px 24px;
-}
-.modifiers-header {
-    background-color: #F8F9FA;
-    padding: 16px 24px;
+@keyframes slide-in {
+  0% {
+    transform: translateY(100vh);
+    display: none;
+  }
+
+  100% {
+    transform: translateY(0);
+    display: block;
+  }
 }
 
-.modifiers-items {
-    background-color: white;
-    padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+@keyframes slide-out {
+  0% {
+    transform: translateY(0);
+    display: block;
+  }
+
+  100% {
+    transform: translateY(100vh);
+    display: none;
+  }
 }
 
-.controls-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 12px;
+/* .modal_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0 0 0 / 0.6);
+  position: fixed;
+  inset: 0px;
+} */
+
+.modal_container {
+  background-color: white;
+  max-width: 480px;
+  position: relative;
+}
+
+.image_container {
+  background-color: #ebf0f5;
+  width: 100%;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon_container {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #dddcdc;
+}
+
+.button_close {
+    border: none;
+}
+
+.icon_close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  color: white;
+}
+
+.icon_img {
+  color: #8799ae;
+}
+
+.modal_container img {
+  width: 100%;
+}
+
+.item_info_container {
+  padding: 16px 24px;
+}
+
+.item_name {
+  font-weight: 700;
+  color: #121212;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.item_description {
+  font-weight: 400;
+  font-size: 16px;
+  color: #464646;
+}
+
+.modifiers_header {
+  background-color: #f8f9fa;
+  padding: 16px 24px;
+}
+
+.modifier_item {
+  background-color: white;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.modifier_name {
+  font-size: 16px;
+  color: #121212;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.input_radio {
+  width: 20px;
+  height: 20px;
+}
+
+.modifier_price {
+  font-size: 16px;
+  font-weight: 400;
+  color: #464646;
+}
+
+.controls_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0px;
 }
