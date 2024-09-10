@@ -11,7 +11,6 @@ import { ItemsModifiers, Items } from '../../types/menu.types';
 import { useCartContext } from '../../contexts/CartContext';
 
 import './index.css';
-import { useFormatCurrency } from '../../utils/formatCurrency';
 
 import { useRef } from 'react';
 
@@ -145,7 +144,7 @@ const Modal = ({ item, setSelected }: ModalProps) => {
 
           <Button
             text='Add to Order'
-            secondText={`${useFormatCurrency(order?.price)}`}
+            secondText={`${format(order?.price)}`}
             onClick={() => handleOrder(order)}
           />
         </div>
