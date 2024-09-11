@@ -2,7 +2,7 @@
 
 - When making a request to the api, a CORS error occured. So I used this:
 
->'https://api.allorigins.win/get?url='
+> https://api.allorigins.win/get?url=
 
 - Here's the link https://allorigins.win/
 
