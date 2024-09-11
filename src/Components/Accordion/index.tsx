@@ -7,11 +7,12 @@ import './index.css';
 interface AccordionProps {
   children: ReactNode;
   title: string;
+  id: number;
 }
 
-const Accordion = ({ children, title }: AccordionProps) => {
+const Accordion = ({ children, title, id }: AccordionProps) => {
   return (
-    <details open>
+    <details id={`${id}`} open>
       <summary className='accordion_header'>
         <h2 className='accordion_title'>{title}</h2>
 

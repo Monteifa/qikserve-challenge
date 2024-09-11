@@ -1,15 +1,32 @@
-// import { useDataContext } from '../contexts/DataContext';
-// // const { format } = new Intl.NumberFormat('pt-BR', {
-// //   style: 'currency',
-// //   currency: 'BRL',
-// // });
+const DEFAULT_LOCALE = 'pt-BR';
+const DEFAULT_CURRENCY = 'BRL';
 
-// export const useFormatCurrency = (value: number) => {
-//   const { restaurant } = useDataContext();
+let currencyFormatter = new Intl.NumberFormat(DEFAULT_LOCALE, {
+  style: 'currency',
+  currency: DEFAULT_CURRENCY,
+});
 
-//   const number = value ?? 0;
-//   return new Intl.NumberFormat(restaurant?.locale, {
-//     style: 'currency',
-//     currency: restaurant?.ccy,
-//   }).format(number);
-// };
+let currentLocale: Intl.LocalesArgument;
+
+interface CurrencyFormatterArgs {
+  language?: Intl.LocalesArgument;
+  currency?: string;
+}
+
+export const CurrencyFormatter = () => {
+  return {
+    formatter: currencyFormatter.format,
+
+    setLocale: ({
+      currency = DEFAULT_LOCALE,
+      language = DEFAULT_CURRENCY,
+    }: CurrencyFormatterArgs) => {
+      if (currentLocale !== language) {
+        currencyFormatter = new Intl.NumberFormat(language, {
+          style: 'currency',
+          currency,
+        });
+      }
+    },
+  };
+};

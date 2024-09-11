@@ -13,6 +13,7 @@ import { useCartContext } from '../../contexts/CartContext';
 import './index.css';
 
 import { useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 const { format } = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -70,7 +71,7 @@ const Modal = ({ item, setSelected }: ModalProps) => {
     setSelected(undefined);
   };
 
-  return (
+  return createPortal(
     <dialog
       className='dialog'
       ref={dialogRef}
@@ -128,7 +129,7 @@ const Modal = ({ item, setSelected }: ModalProps) => {
                     id={`${modifierItem.id}`}
                     onChange={() => updateModifier(modifierItem)}
                     checked={selectedModifier?.id === modifierItem.id}
-                    value={modifier.id}
+                    value={modifierItem.id}
                   />
                 </label>
               ))
@@ -149,7 +150,8 @@ const Modal = ({ item, setSelected }: ModalProps) => {
           />
         </div>
       </div>
-    </dialog>
+    </dialog>,
+    document.body
   );
 };
 

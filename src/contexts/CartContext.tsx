@@ -52,37 +52,41 @@ export const CartContextProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (order: Order) => {
     const newCart = [...cart];
-
-    const index = cart?.findIndex((cart) => cart.id === order.id);
+    const index = cart?.findIndex((cart) =>
+      order.modifier !== undefined
+        ? cart.modifier?.id === order.modifier?.id
+        : cart.id === order.id
+    );
 
     if (index === -1) {
       setCart((cart: Array<Order>) => [...cart, order]);
       return;
     }
 
-    if (order.modifier) {
-      if (newCart[index].modifier?.id === order.modifier.id) {
-        newCart[index] = {
-          ...newCart[index],
-          ...order,
-          quantity: newCart[index].quantity + order.quantity,
-        };
-        setCart(newCart);
-        return;
-      } else {
-        setCart((cart: Array<Order>) => [...cart, order]);
-        return;
-      }
-    } else {
+    if (!order.modifier) {
       newCart[index] = {
         ...newCart[index],
         ...order,
+        quantity: newCart[index].quantity + order.quantity,
       };
 
       setCart(newCart);
-
       return;
     }
+
+    if (newCart[index].modifier?.id === order.modifier.id) {
+      newCart[index] = {
+        ...newCart[index],
+        ...order,
+        quantity: newCart[index].quantity + order.quantity,
+      };
+
+      setCart(newCart);
+      return;
+    }
+
+    setCart((cart: Array<Order>) => [...cart, order]);
+    return;
   };
 
   return (

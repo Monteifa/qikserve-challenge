@@ -1,33 +1,30 @@
 import { useEffect, useState } from 'react';
 
-import MenuItem from './Components/MenuItem';
-import Header from './Components/Header';
-import SectionItem from './Components/SectionItem';
-import Modal from './Components/Modal';
-import Accordion from './Components/Accordion';
+import Button from './Components/Button';
 import CartSection from './Components/CartSection';
-
-import { AiOutlineSearch } from 'react-icons/ai';
-
-import { useDataContext } from './contexts/DataContext';
+import Header from './Components/Header';
+import MenuSection from './Components/MenuSection/MenuSection';
 
 import { MenuMock, RestaurantMock } from './consts/index';
+import { useCartContext } from './contexts/CartContext';
+import { useDataContext } from './contexts/DataContext';
+
+import { Menu } from './types/menu.types';
 import { Restaurant } from './types/restaurant.types';
-import { Items, Menu } from './types/menu.types';
+import { CurrencyFormatter } from './utils/formatCurrency';
 
 import './index.css';
-import Button from './Components/Button';
-import { useCartContext } from './contexts/CartContext';
 
 function App() {
-  const [selectedItem, setSelectedItem] = useState<Items>();
   const [cartOpen, setCartOpen] = useState(false);
 
-  const { restaurant, setRestaurant, menu, setMenu } = useDataContext();
+  const { restaurant, setRestaurant, setMenu } = useDataContext();
 
   const { cart } = useCartContext();
 
-  // const [filtered, setFiltered] = useState([]);
+  const cartTotalQuantity = cart.reduce((accumulator, current) => {
+    return (accumulator += current.quantity);
+  }, 0);
 
   useEffect(() => {
     const getData = async () => {
@@ -35,6 +32,11 @@ function App() {
       setRestaurant(RestaurantMock as unknown as Restaurant);
 
       setMenu(MenuMock as unknown as Menu);
+
+      CurrencyFormatter().setLocale({
+        language: RestaurantMock.locale,
+        currency: RestaurantMock.ccy,
+      });
       // const promises: Promise<Response>[] = [
       //   fetch(
       //     'https://api.allorigins.win/get?url=https://cdn-dev.preoday.com/challenge/venue/9'
@@ -65,14 +67,6 @@ function App() {
     getData();
   }, []);
 
-  // const handleSearch = (value: any) => {
-  //   const array = menu?.sections.filter((section) =>
-  //     section.items.filter((item) => item.name === value)
-  //   );
-
-  //   setFiltered(array);
-  // };
-
   return (
     <>
       <Header />
@@ -81,54 +75,26 @@ function App() {
         src={restaurant?.webSettings.bannerImage}
         alt='banner'
       />
-      <div className='search_bar_container'>
-        <div className='search_bar'>
-          <AiOutlineSearch width={24} height={24} />
 
-          <input type='text' placeholder='Search menu items' />
-        </div>
-      </div>
       <div className='container'>
-        <div className='menu-container'>
-          <div className='section-container'>
-            {menu?.sections?.map((section) => {
-              return (
-                <SectionItem
-                  key={section.id}
-                  name={section.name}
-                  img={section.images[0].image}
-                />
-              );
-            })}
-          </div>
-
-          {menu?.sections.map((section) => (
-            <Accordion key={section.id} title={section.name}>
-              {section.items?.map((item) => (
-                <MenuItem
-                  key={item?.id}
-                  item={item}
-                  setSelected={setSelectedItem}
-                />
-              ))}
-            </Accordion>
-          ))}
-        </div>
+        <MenuSection />
 
         <CartSection cartOpen={cartOpen} setCartOpen={setCartOpen} />
+      </div>
 
-        <div className='mobile_btn_cart'>
-          <Button
-            text='Carrinho'
-            secondText={`${cart.length} item(s)`}
-            onClick={() => setCartOpen(!cartOpen)}
-          />
+      <div className='teste'>
+        <div className='radius'>
+          <p className=''>View allergy information</p>
         </div>
       </div>
 
-      {selectedItem && (
-        <Modal item={selectedItem} setSelected={setSelectedItem} />
-      )}
+      <div className='mobile_btn_cart'>
+        <Button
+          text='Carrinho'
+          secondText={`${cartTotalQuantity} item(s)`}
+          onClick={() => setCartOpen(!cartOpen)}
+        />
+      </div>
     </>
   );
 }

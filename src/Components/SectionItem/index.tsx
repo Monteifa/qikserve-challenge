@@ -1,16 +1,17 @@
 import './index.css';
 
 interface SectionItemsProps {
+  id: number;
   name: string;
   img: string;
 }
 
 const SectionItem = ({ name, img }: SectionItemsProps) => {
   return (
-    <div className='teste'>
-      <div className='circle'>
+    <div className='section_item_container'>
+      <div className='sectio_item_circle'>
         <img
-          className='img-teste'
+          className='section_item_img'
           src={img}
           height={68}
           width={68}
