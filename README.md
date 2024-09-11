@@ -1,3 +1,15 @@
+# API
+
+- When making a request to the api, a CORS error occured. So I used this:
+
+> https://api.allorigins.win/get?url=
+
+- Here's the link https://allorigins.win/
+
+# CSS
+
+- **Sass** or **Styled-Components** were not in the lists of technologies I could use, so I used standard css instead, which I think is not the best solution.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -22,7 +34,7 @@ export default tseslint.config({
       tsconfigRootDir: import.meta.dirname,
     },
   },
-})
+});
 ```
 
 - Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
@@ -31,7 +43,7 @@ export default tseslint.config({
 
 ```js
 // eslint.config.js
-import react from 'eslint-plugin-react'
+import react from 'eslint-plugin-react';
 
 export default tseslint.config({
   // Set the react version
@@ -46,5 +58,5 @@ export default tseslint.config({
     ...react.configs.recommended.rules,
     ...react.configs['jsx-runtime'].rules,
   },
-})
+});
 ```
