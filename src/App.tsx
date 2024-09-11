@@ -3,14 +3,12 @@ import { useEffect, useState } from 'react';
 import Button from './Components/Button';
 import CartSection from './Components/CartSection';
 import Header from './Components/Header';
-import MenuSection from './Components/MenuSection/MenuSection';
+import MenuSection from './Components/MenuSection';
+import Loader from './Components/Loaders';
 
-import { MenuMock, RestaurantMock } from './consts/index';
 import { useCartContext } from './contexts/CartContext';
 import { useDataContext } from './contexts/DataContext';
 
-import { Menu } from './types/menu.types';
-import { Restaurant } from './types/restaurant.types';
 import { CurrencyFormatter } from './utils/formatCurrency';
 
 import './index.css';
@@ -18,7 +16,8 @@ import './index.css';
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
 
-  const { restaurant, setRestaurant, setMenu } = useDataContext();
+  const { restaurant, setRestaurant, setMenu, loading, setLoading } =
+    useDataContext();
 
   const { cart } = useCartContext();
 
@@ -28,40 +27,41 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       await new Promise((res) => setTimeout(res, 2000));
-      setRestaurant(RestaurantMock as unknown as Restaurant);
 
-      setMenu(MenuMock as unknown as Menu);
+      const promises: Promise<Response>[] = [
+        fetch(
+          'https://api.allorigins.win/get?url=https://cdn-dev.preoday.com/challenge/venue/9'
+        ),
+        fetch(
+          'https://api.allorigins.win/get?url=https://cdn-dev.preoday.com/challenge/menu'
+        ),
+      ];
 
-      CurrencyFormatter().setLocale({
-        language: RestaurantMock.locale,
-        currency: RestaurantMock.ccy,
-      });
-      // const promises: Promise<Response>[] = [
-      //   fetch(
-      //     'https://api.allorigins.win/get?url=https://cdn-dev.preoday.com/challenge/venue/9'
-      //   ),
-      //   fetch(
-      //     'https://api.allorigins.win/get?url=https://cdn-dev.preoday.com/challenge/menu'
-      //   ),
-      // ];
+      try {
+        const responses = await Promise.all(promises);
 
-      // try {
-      //   const responses = await Promise.all(promises);
+        const [restaurantData, menuData] = await Promise.all(
+          responses.map(async (response) => {
+            const data = await response.json();
+            return JSON.parse(data.contents);
+          })
+        );
 
-      //   const [restaurantData, menuData] = await Promise.all(
-      //     responses.map(async (response) => {
-      //       const teste = await response.json();
-      //       return JSON.parse(teste.contents);
-      //     })
-      //   );
+        setRestaurant(restaurantData);
+        setMenu(menuData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+      }
 
-      //   setRestaurant(restaurantData);
-      //   setMenu(menuData);
-      // } catch (error) {
-      //   console.error('Error fetching data:', error);
-      //   throw error;
-      // }
+      if (restaurant)
+        CurrencyFormatter().setLocale({
+          language: restaurant?.locale,
+          currency: restaurant?.ccy,
+        });
     };
 
     getData();
@@ -70,11 +70,19 @@ function App() {
   return (
     <>
       <Header />
-      <img
-        className='img-header'
-        src={restaurant?.webSettings.bannerImage}
-        alt='banner'
-      />
+
+      {loading ? (
+        <Loader element='header' />
+      ) : (
+        <div
+          className='img_header_container'
+          style={{
+            backgroundImage: `url(${restaurant?.webSettings.bannerImage})`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+      )}
 
       <div className='container'>
         <MenuSection />
@@ -82,9 +90,11 @@ function App() {
         <CartSection cartOpen={cartOpen} setCartOpen={setCartOpen} />
       </div>
 
-      <div className='teste'>
+      <div className='allergy_container'>
         <div className='radius'>
-          <p className=''>View allergy information</p>
+          <p style={{ color: restaurant?.webSettings.primaryColour }}>
+            View allergy information
+          </p>
         </div>
       </div>
 

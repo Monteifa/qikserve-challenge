@@ -1,24 +1,18 @@
-import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useEffect, useState, useRef } from 'react';
 
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { FaRegImage } from 'react-icons/fa6';
 
-import QuantityController from '../QuantityControl';
 import Button from '../Button';
+import QuantityController from '../QuantityControl';
 
 import { ItemsModifiers, Items } from '../../types/menu.types';
 
 import { useCartContext } from '../../contexts/CartContext';
 
-import './index.css';
+import { CurrencyFormatter } from '../../utils/formatCurrency';
 
-import { useRef } from 'react';
-import { createPortal } from 'react-dom';
-
-const { format } = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL',
-});
+import './Modal.css';
 
 interface Order {
   id: number;
@@ -78,7 +72,10 @@ const Modal = ({ item, setSelected }: ModalProps) => {
       onCancel={() => setSelected(undefined)}
     >
       <div className='modal_container'>
-        {item.images ? (
+        <div className='image_container'>
+          <img src={item?.images?.[0]?.image} alt='' />
+        </div>
+        {/* {item.images ? (
           <img src={item?.images?.[0]?.image} alt='' />
         ) : (
           <div className='image_container'>
@@ -86,7 +83,7 @@ const Modal = ({ item, setSelected }: ModalProps) => {
               <FaRegImage className='icon_img' />
             </div>
           </div>
-        )}
+        )} */}
 
         <button className='button_close'>
           <AiFillCloseCircle
@@ -118,7 +115,7 @@ const Modal = ({ item, setSelected }: ModalProps) => {
                   <div>
                     <p className='modifier_name'>{modifierItem.name}</p>
                     <p className='modifier_price'>
-                      {format(modifierItem.price)}
+                      {CurrencyFormatter().formatter(modifierItem.price)}
                     </p>
                   </div>
 
@@ -141,11 +138,12 @@ const Modal = ({ item, setSelected }: ModalProps) => {
           <QuantityController
             qty={order?.quantity ?? 0}
             setQuantity={updateQuantity}
+            size='default'
           />
 
           <Button
             text='Add to Order'
-            secondText={`${format(order?.price)}`}
+            secondText={`${CurrencyFormatter().formatter(order?.price)}`}
             onClick={() => handleOrder(order)}
           />
         </div>
@@ -155,4 +153,4 @@ const Modal = ({ item, setSelected }: ModalProps) => {
   );
 };
 
-export default Modal;
+export { Modal };

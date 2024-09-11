@@ -1,12 +1,12 @@
-import './index.css';
-
 import { FaPlus, FaMinus } from 'react-icons/fa6';
+
+import './QuantityControl.css';
 
 interface QuantityControlProps {
   qty: number;
   setQuantity: (data: number) => void;
   allowRemove?: boolean;
-  size?: 'small';
+  size: 'small' | 'default';
 }
 
 const QuantityControl = ({
@@ -36,4 +36,4 @@ const QuantityControl = ({
   );
 };
 
-export default QuantityControl;
+export { QuantityControl };

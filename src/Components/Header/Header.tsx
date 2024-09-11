@@ -1,20 +1,28 @@
 import { useState } from 'react';
+
 import { FaBars } from 'react-icons/fa6';
 
-import './index.css';
+import { useDataContext } from '../../contexts/DataContext';
+
+import './Header.css';
 
 const Header = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
+  const { restaurant } = useDataContext();
+
   return (
-    <div className='header_container'>
+    <div
+      className='header_container'
+      style={{ backgroundColor: restaurant?.webSettings.navBackgroundColour }}
+    >
       <nav className='desktop_nav'>
         <a href=''>MENU</a>
         <a href=''>ENTRAR</a>
         <a href=''>CONTATO</a>
       </nav>
 
-      <div className='mobile_nav'>
+      <div className='mobile_nav_container'>
         <div></div>
         <div className='active_nav'>Menu</div>
         <FaBars
@@ -23,7 +31,12 @@ const Header = () => {
         />
 
         {navbarOpen && (
-          <div className='teste_nav'>
+          <div
+            className='mobile_nav'
+            style={{
+              backgroundColor: restaurant?.webSettings.navBackgroundColour,
+            }}
+          >
             <a href=''>MENU</a>
 
             <a href=''>ENTRAR</a>
@@ -36,4 +49,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export { Header };

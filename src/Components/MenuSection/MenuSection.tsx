@@ -9,8 +9,10 @@ import Accordion from '../Accordion';
 import MenuItem from '../MenuItem';
 import Modal from '../Modal';
 import SectionItem from '../SectionItem';
+import LoaderMenuItem from '../Loaders/LoaderMenuItem';
 
 import './MenuSection.css';
+import LoaderSectionItem from '../Loaders/LoaderSectionItem';
 
 const MenuSection = () => {
   const [selectedItem, setSelectedItem] = useState<Items>();
@@ -18,7 +20,7 @@ const MenuSection = () => {
 
   const deferredQuery = useDeferredValue(search);
 
-  const { menu } = useDataContext();
+  const { menu, loading } = useDataContext();
 
   const filteredSections = menu?.sections.filter((section) =>
     section.items.some((item) =>
@@ -46,32 +48,50 @@ const MenuSection = () => {
         </div>
       </div>
 
-      <div className='menu-container'>
-        <div className='section-container'>
-          {filteredSections?.map((section) => (
-            <SectionItem
-              key={section.id}
-              id={section.id}
-              name={section.name}
-              img={section.images[0].image}
-            />
-          ))}
-        </div>
+      <div className='menu_container'>
+        {loading ? (
+          <>
+            <div className='section_container'>
+              <LoaderSectionItem />
+              <LoaderSectionItem />
+              <LoaderSectionItem />
+            </div>
 
-        {filteredSections?.map((section) => (
-          <Accordion key={section.id} title={section.name} id={section.id}>
-            {section.items?.map(
-              (item) =>
-                filteredItems?.includes(item) && (
-                  <MenuItem
-                    key={item?.id}
-                    item={item}
-                    setSelected={setSelectedItem}
-                  />
-                )
-            )}
-          </Accordion>
-        ))}
+            <LoaderMenuItem />
+            <LoaderMenuItem />
+            <LoaderMenuItem />
+            <LoaderMenuItem />
+            <LoaderMenuItem />
+          </>
+        ) : (
+          <>
+            <div className='section_container'>
+              {filteredSections?.map((section) => (
+                <SectionItem
+                  key={section.id}
+                  id={section.id}
+                  name={section.name}
+                  img={section.images[0].image}
+                />
+              ))}
+            </div>
+
+            {filteredSections?.map((section) => (
+              <Accordion key={section.id} title={section.name} id={section.id}>
+                {section.items?.map(
+                  (item) =>
+                    filteredItems?.includes(item) && (
+                      <MenuItem
+                        key={item?.id}
+                        item={item}
+                        setSelected={setSelectedItem}
+                      />
+                    )
+                )}
+              </Accordion>
+            ))}
+          </>
+        )}
       </div>
 
       {selectedItem && (
@@ -81,4 +101,4 @@ const MenuSection = () => {
   );
 };
 
-export default MenuSection;
+export { MenuSection };

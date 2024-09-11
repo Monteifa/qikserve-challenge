@@ -1,0 +1,7 @@
+.loader_section_item { 
+    width: 80px;
+    height: 128px;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 28px;
+    margin-top: 16px;
+}

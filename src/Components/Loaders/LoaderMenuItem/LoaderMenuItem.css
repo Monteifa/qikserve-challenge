@@ -1,0 +1,8 @@
+.menu_item_loader {
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+}

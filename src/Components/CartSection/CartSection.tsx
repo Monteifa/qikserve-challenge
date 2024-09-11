@@ -1,12 +1,12 @@
-import Button from '../Button';
-import CardItem from '../CartItem';
+import Button from '../Button/';
+import CardItem from '../CartItem/';
 
 import { AiOutlineClose } from 'react-icons/ai';
 
 import { useCartContext } from '../../contexts/CartContext';
 import { CurrencyFormatter } from '../../utils/formatCurrency';
 
-import './index.css';
+import './CartSection.css';
 
 interface CartSectionProps {
   cartOpen: boolean;
@@ -102,4 +102,4 @@ const CartSection = ({ cartOpen, setCartOpen }: CartSectionProps) => {
   );
 };
 
-export default CartSection;
+export { CartSection };

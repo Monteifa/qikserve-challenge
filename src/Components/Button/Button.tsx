@@ -1,6 +1,8 @@
 import { ButtonHTMLAttributes } from 'react';
 
-import './index.css';
+import { useDataContext } from '../../contexts/DataContext';
+
+import './Button.css';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
@@ -8,8 +10,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = ({ text, secondText, ...props }: ButtonProps) => {
+  const { restaurant } = useDataContext();
+
   return (
-    <button {...props} className='button_container'>
+    <button
+      {...props}
+      className='button_container'
+      style={{ backgroundColor: restaurant?.webSettings.primaryColour }}
+    >
       {text}
       {secondText && (
         <>
@@ -21,4 +29,4 @@ const Button = ({ text, secondText, ...props }: ButtonProps) => {
   );
 };
 
-export default Button;
+export { Button };

@@ -1,10 +1,11 @@
+import Badge from '../Badge';
+
 import { useCartContext } from '../../contexts/CartContext';
+
 import { Items } from '../../types/menu.types';
 import { CurrencyFormatter } from '../../utils/formatCurrency';
 
-import Badge from '../Badge';
-
-import './index.css';
+import './MenuItem.css';
 
 const MenuItem = ({
   item,
@@ -18,7 +19,7 @@ const MenuItem = ({
   const qty = cart.find((itemCart) => itemCart.id === item.id)?.quantity;
 
   return (
-    <div className='menu-item-container' onClick={() => setSelected(item)}>
+    <div className='menu_item_container' onClick={() => setSelected(item)}>
       <div className=''>
         <p className='menu_item_title'>
           {qty && <Badge>{qty}</Badge>}
@@ -43,4 +44,4 @@ const MenuItem = ({
   );
 };
 
-export default MenuItem;
+export { MenuItem };

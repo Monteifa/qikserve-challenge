@@ -1,4 +1,6 @@
-import './index.css';
+import { useDataContext } from '../../contexts/DataContext';
+
+import './SectionItem.css';
 
 interface SectionItemsProps {
   id: number;
@@ -7,8 +9,15 @@ interface SectionItemsProps {
 }
 
 const SectionItem = ({ name, img }: SectionItemsProps) => {
+  const { restaurant } = useDataContext();
+
   return (
-    <div className='section_item_container'>
+    <div
+      className='section_item_container'
+      style={{
+        borderBottom: `2px solid ${restaurant?.webSettings.primaryColour}`,
+      }}
+    >
       <div className='sectio_item_circle'>
         <img
           className='section_item_img'
@@ -24,4 +33,4 @@ const SectionItem = ({ name, img }: SectionItemsProps) => {
   );
 };
 
-export default SectionItem;
+export { SectionItem };

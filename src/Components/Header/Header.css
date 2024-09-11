@@ -1,8 +1,8 @@
 .header_container {
   width: 100%;
-  background-color: #4f372f;
   padding: 16px;
   color: white;
+  background-color: #d5d6d6;
 }
 
 .header_container a {
@@ -12,16 +12,16 @@
   font-weight: 400;
 }
 
-.mobile_nav {
+.mobile_nav_container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .mobile_nav_icon {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
 }
 
 .desktop_nav {
@@ -29,12 +29,12 @@
   gap: 24px;
 }
 
-.teste_nav {
+.mobile_nav {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  background-color: #4f372f;
+  background-color: inherit;
   z-index: 10;
   padding: 16px;
   gap: 24px;
@@ -52,7 +52,7 @@
     align-items: center;
   }
 
-  .mobile_nav {
+  .mobile_nav_container {
     display: none;
   }
 }

@@ -1,8 +1,9 @@
-import { Order, useCartContext } from '../../contexts/CartContext';
-import { CurrencyFormatter } from '../../utils/formatCurrency';
 import QuantityControler from '../QuantityControl';
 
-import './index.css';
+import { CurrencyFormatter } from '../../utils/formatCurrency';
+import { Order, useCartContext } from '../../contexts/CartContext';
+
+import './CarItem.css';
 
 const CartItem = ({ id, name, price, quantity, modifier }: Order) => {
   const { updateCart } = useCartContext();
@@ -36,4 +37,4 @@ const CartItem = ({ id, name, price, quantity, modifier }: Order) => {
   );
 };
 
-export default CartItem;
+export { CartItem };

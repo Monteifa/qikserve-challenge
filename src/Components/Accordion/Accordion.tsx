@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { FaChevronDown } from 'react-icons/fa6';
 
-import './index.css';
+import './Accordion.css';
 
 interface AccordionProps {
   children: ReactNode;
@@ -24,4 +24,4 @@ const Accordion = ({ children, title, id }: AccordionProps) => {
   );
 };
 
-export default Accordion;
+export { Accordion };

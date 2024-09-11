@@ -3,8 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: none;
-    border-bottom: 2px solid #4F372F;
+    border: none;   
     background-color: transparent;
     width: 88px;
     padding: 12px;
@@ -13,13 +12,14 @@
 
 .sectio_item_circle {
     padding: 2px;
-    border: 2px solid #4F372F;
+    border: 2px solid inherit;
     border-radius: 50%;
     width: 82px;
     height: 82px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid #4f372f;
 
 }
 
