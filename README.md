@@ -10,6 +10,14 @@
 
 - **Sass** or **Styled-Components** were not in the lists of technologies I could use, so I used standard css instead, which I think is not the best solution.
 
+# How to run
+
+- First step
+> npm install
+
+- Second step
+> npm run dev
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
