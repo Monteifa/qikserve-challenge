@@ -12,11 +12,9 @@
 
 # How to run
 
-- First step
-> npm install
+- First step ```npm install``` 
 
-- Second step
-> npm run dev
+- Second step ```npm run dev``` 
 
 # React + TypeScript + Vite
 
