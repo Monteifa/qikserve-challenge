@@ -1,6 +1,6 @@
 export const MenuMock = {
   id: 14730,
-  name: 'FE TEST',
+  name: 'FE TES',
   type: 'MENU',
   collapse: 0,
   sections: [
