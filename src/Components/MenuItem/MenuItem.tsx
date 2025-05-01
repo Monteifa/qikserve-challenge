@@ -5,6 +5,8 @@ import { useCartContext } from '../../contexts/CartContext';
 import { Items } from '../../types/menu.types';
 import { CurrencyFormatter } from '../../utils/formatCurrency';
 
+import LazyImage from '../LazyImage';
+
 import './MenuItem.css';
 
 const MenuItem = ({
@@ -31,15 +33,7 @@ const MenuItem = ({
         </p>
       </div>
 
-      {item.images && (
-        <img
-          src={item.images && item.images[0].image}
-          width={128}
-          height={85}
-          alt=''
-          className='menu_item_img'
-        />
-      )}
+      <LazyImage src={item?.images?.[0]?.image} />
     </div>
   );
 };
